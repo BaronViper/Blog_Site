@@ -4,6 +4,9 @@ from datetime import datetime
 app = Flask(__name__)
 
 
+
+
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -17,6 +20,11 @@ def blog():
 @app.route('/elements')
 def elements():
     return render_template('elements.html')
+
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
 
 
 if __name__ == '__main__':
