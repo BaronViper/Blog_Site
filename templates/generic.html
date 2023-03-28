@@ -23,19 +23,9 @@
 					</header>
 
 				<!-- Nav -->
-					<nav id="nav">
-						<ul class="links">
-							<li><a href="{{ url_for('home') }}">The Mission</a></li>
-							<li class="active"><a href="{{ url_for('blog') }}">Blog Post</a></li>
-							<li><a href="{{ url_for('elements') }}">Elements Reference</a></li>
-						</ul>
-						<ul class="icons">
-							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-							<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-							<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-						</ul>
-					</nav>
+				{% with active = 'post' %}
+					{% include "navbar.html" %}
+				{% endwith %}
 
 				<!-- Main -->
 					<div id="main">

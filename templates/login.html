@@ -23,31 +23,37 @@
 					</header>
 
 				<!-- Nav -->
-					<nav id="nav">
-						<ul class="links">
-							<li><a href="{{ url_for('home') }}">The Mission</a></li>
-							<li class="active"><a href="{{ url_for('blog') }}">Login</a></li>
-							<li><a href="{{ url_for('elements') }}">Elements Reference</a></li>
-						</ul>
-						<ul class="icons">
-							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-							<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-							<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-						</ul>
-					</nav>
+				{% with active = 'login' %}
+					{% include "navbar.html" %}
+				{% endwith %}
 
 				<!-- Main -->
 					<div id="main">
 
 						<!-- Post -->
-							<section class="post">
-								<header class="major">
-									<h1>Login</h1>
-									<p>Welcome back.<br>Let's get started.</p>
-								</header>
-								<form >
-							</section>
+						<section class="post">
+							<header class="major">
+								<h1>Login</h1>
+								<p>Welcome back.<br>Let's get started.</p>
+							</header>
+							<form method="post" action="#">
+								<div class="row gtr-uniform">
+									<div class="col-6 col-12-xsmall">
+										<input type="text" name="demo-name" id="demo-name" value="" placeholder="Name" />
+									</div>
+									<div class="col-6 col-12-xsmall">
+										<input type="password" name="demo-email" id="demo-email" value="" placeholder="Password" />
+									</div>
+									<div class="col-12">
+										<ul class="actions">
+											<li><input type="submit" value="Login" class="primary" /></li>
+										</ul>
+									</div>
+								</div>
+
+							</form>
+						</section>
+
 
 					</div>
 
