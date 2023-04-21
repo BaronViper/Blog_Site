@@ -6,14 +6,14 @@
 -->
 <html>
 	<head>
-		<title>The Mission</title>
+		<title>The LightHouse</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/Logo.ico') }}">
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
-		<noscript><link rel="stylesheet" href="{{ url_for('static', filename='css/noscript.css') }}" /></noscript>
+		<noscript><link rel="stylesheet" href="{{ url_for('static', filename='css/noscript.css') }}"/></noscript>
 	</head>
-	<body class="is-preload">
+	<body class="is-preload no-background">
 
 		<!-- Wrapper -->
 			<div id="wrapper">
@@ -24,52 +24,32 @@
 					</header>
 
 				<!-- Nav -->
-					{% with current = 'login' %}
-						{% include "navbar.html" %}
-					{% endwith %}
-
+					{% include "navbar.html" %}
 
 				<!-- Main -->
 					<div id="main">
 
 						<!-- Post -->
-						<section class="post">
-							<header class="major">
-								<h1>Login</h1>
-								<p>Welcome back.<br>Let's get started.</p>
-								{% with messages = get_flashed_messages() %}
-								  {% if messages %}
-									{% for message in messages %}
-									  <p>{{ message }}</p>
-									{% endfor %}
-								  {% endif %}
-								{% endwith %}
-							</header>
-							<form method="post" action="{{ url_for('login')}}">
-								{{ form.hidden_tag() }}
-								{{ form.csrf_token }}
-								<div class="row gtr-uniform">
-									<div class="col-6 col-12-xsmall">
-										<input type="text" name="name" id="demo-name" value="" placeholder="Name" />
-									</div>
-									<div class="col-6 col-12-xsmall">
-										<input type="password" name="password" id="demo-email" value="" placeholder="Password" />
-									</div>
-									<div class="col-12">
-										<ul class="actions">
-											<li><input name="submit" type="submit" value="Login" class="primary" /></li>
-										</ul>
-									</div>
-								</div>
-
-							</form>
-						</section>
-
+							<section class="post">
+								<header class="major">
+									<span class="date">{{ post.date }}</span>
+									<h1>{{ post.title }}</h1>
+									<p>"{{ post.quote}}"<br>-C.S. Lewis</p>
+									<p>By {{ post.author.name}}</p>
+								</header>
+								<div class="image main"><img src="{{ post.img_url }}" alt="Unsupported Image" /></div>
+								<p>{{ post.body }}</p>
+								{% if current_user.name == post.author.name %}
+									<p><a href="{{ url_for('edit_post', post_id=post.id) }}">Edit Post</a></p>
+								{% endif %}
+								{% if current_user.name == post.author.name %}
+									<p><a href="{{ url_for('delete_post', post_id=post.id) }}">Delete Post</a></p>
+								{% endif %}
+							</section>
 
 					</div>
 
 				<!-- Footer -->
-
 
 				<!-- Copyright -->
 					<div id="copyright">

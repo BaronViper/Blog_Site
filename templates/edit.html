@@ -11,7 +11,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/Logo.ico') }}">
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
-		<noscript><link rel="stylesheet" href="{{ url_for('static', filename='css/noscript.css') }}" /></noscript>
+		<noscript><link rel="stylesheet" href="{{ url_for('static', filename='css/noscript.css') }}"/></noscript>
 	</head>
 	<body class="is-preload">
 
@@ -20,14 +20,11 @@
 
 				<!-- Header -->
 					<header id="header">
-						<a href="{{ url_for('home') }}" class="logo">The LightHouse</a>
+						<a href="{{ url_for('home') }}" class="logo">The Lighthouse</a>
 					</header>
 
 				<!-- Nav -->
-					{% with current = 'login' %}
-						{% include "navbar.html" %}
-					{% endwith %}
-
+				{% include "navbar.html" %}
 
 				<!-- Main -->
 					<div id="main">
@@ -35,8 +32,8 @@
 						<!-- Post -->
 						<section class="post">
 							<header class="major">
-								<h1>Login</h1>
-								<p>Welcome back.<br>Let's get started.</p>
+								<h1>Edit Post</h1>
+								<p>Something's wrong?<br>We can fix it. No problem.</p>
 								{% with messages = get_flashed_messages() %}
 								  {% if messages %}
 									{% for message in messages %}
@@ -44,24 +41,51 @@
 									{% endfor %}
 								  {% endif %}
 								{% endwith %}
+
+								{% if form.errors %}
+									{% for error in form.errors.items() %}
+										{% for case in error[1] %}
+											<p>{{ case }}</p>
+										{% endfor %}
+									{% endfor %}
+								{% endif %}
 							</header>
-							<form method="post" action="{{ url_for('login')}}">
+
+							<form method="post" action="{{ url_for('edit_post', post_id=post.id)}}">
 								{{ form.hidden_tag() }}
 								{{ form.csrf_token }}
 								<div class="row gtr-uniform">
 									<div class="col-6 col-12-xsmall">
-										<input type="text" name="name" id="demo-name" value="" placeholder="Name" />
+										<input type="text" name="title" value="{{ post.title }}" placeholder="Blog Title" />
 									</div>
 									<div class="col-6 col-12-xsmall">
-										<input type="password" name="password" id="demo-email" value="" placeholder="Password" />
+										{{ form.subject }}
+									</div>
+									<div class="col-6 col-12-xsmall">
+										<input type="text" name="quote" value="{{ post.quote }}" placeholder="Quote (No quotation marks)" />
+									</div>
+									<div class="col-6 col-12-xsmall">
+										<input type="text" name="quote_author" value="{{ post.quote_author }}" placeholder="Quote Author" />
 									</div>
 									<div class="col-12">
+										<input type="text" name="image" value="{{ post.img_url }}" placeholder="Image URL (Copy image link)" />
+									</div>
+									<!-- Break -->
+									<div class="col-12">
+										<textarea name="subtitle" placeholder="Enter a brief description of what your blog post is all about" rows="4">{{ post.subtitle }}</textarea>
+									</div>
+									<!-- Break -->
+									<div class="col-12">
+										<textarea name="message" placeholder="Enter your blog post content" rows="6">{{ post.body }}</textarea>
+									</div>
+									<!-- Break -->
+									<div class="col-12">
 										<ul class="actions">
-											<li><input name="submit" type="submit" value="Login" class="primary" /></li>
+											<li><input name="submit" type="submit" value="Edit" class="primary" /></li>
+											<li><input type="reset" value="Reset" /></li>
 										</ul>
 									</div>
 								</div>
-
 							</form>
 						</section>
 

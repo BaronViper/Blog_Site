@@ -20,14 +20,6 @@
 			<div id="wrapper">
 
 				<!-- Intro -->
-					<div id="intro">
-						<h1>The<br />
-						LightHouse</h1>
-						<p>Welcome to The LightHouse, where we share inspiring life stories of missionaries from around the world who have dedicated their lives to spreading the message of hope and love through their faith.</p>
-						<ul class="actions">
-							<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
-						</ul>
-					</div>
 
 				<!-- Header -->
 					<header id="header">
@@ -44,20 +36,6 @@
 
 						<!-- Featured Post -->
 
-						{% if featured_post %}
-							<article class="post featured">
-								<header class="major">
-									<span class="date">{{ featured_post.date }}</span>
-									<h2><a href="{{ url_for('blog', post_id=featured_post.id) }}">{{ featured_post.title }}</a></h2>
-									<h4>By {{ featured_post.author.name }}</h4>
-									<p>"{{ featured_post.subtitle }}"</p>
-								</header>
-								<a href="{{ url_for('blog', post_id=featured_post.id) }}" class="image main"><img src="{{ featured_post.img_url }}" alt="" /></a>
-								<ul class="actions special">
-									<li><a href="{{ url_for('blog', post_id=featured_post.id) }}" class="button large">Full Story</a></li>
-								</ul>
-							</article>
-						{% endif %}
 
 						<!-- Posts -->
 						{% if all_posts %}
