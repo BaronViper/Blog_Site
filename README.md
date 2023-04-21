@@ -1,29 +1,24 @@
-# Simple Blog Website Template
-This is a blog website template that you can use as a starting point for your own blog website. It is built using HTML, CSS, and JavaScript, and includes several features that are common to many blogs.
+# Masisvely Blog Website [Beta Version 1.0]
+This is a blog website that allows for CRUD (Create, Read, Update, Delete) operations using SQL Alchemy. The base front-end work was done by "HTML5 UP" and the backend was developed by BaronViper.
 
 ## Features
-* Responsive ign that looks great on all devices
-* Home page with a list of all blog posts
+* Full admin authentication process for CRUD blog posts
+* Responsive navbar that accommodates all screen types
+* Search feature to quickly find blog posts
+* Pagination to enable multiple blog pages
+* Organized blog post subjects and authors
+* User entries are converted and formatted into beautiful blog posts
 
 ## Getting Started
-To use this template, simply download or clone the repository and customize it to your needs. You can modify the HTML, CSS, and JavaScript files to change the look and functionality of the website.
+To get started with this project, you'll need to follow these steps:
 
-You will need a web server to host the website. You can use a service like GitHub Pages to host the website for free.
+1. Clone the repository to your local machine.
+2. Install the required dependencies by running pip install -r requirements.txt.
+3. Set up the database by running creating a folder 'instance' with 'blog.db'
+4. Start the development server by running python main.py.
+5. Visit http://localhost:5000 in your web browser to view the website.
 
-## Contributing
-If you find a bug or have a suggestion for how to improve the template, please open an issue or submit a pull request.
+## Credits
+"HTML5 UP" for the base front-end work
+BaronViper for the backend development
 
-## License
-This template is licensed under the MIT License. Feel free to use it for your own projects or modify it as needed.
-
-## Credits:
-
-Website Design:
-* Massively by HTML5 UP (html5up.net | @ajlkn)
-Icons:
-* Font Awesome (fontawesome.io)
-
-Other:
-* jQuery (jquery.com)
-* Scrollex (github.com/ajlkn/jquery.scrollex)
-* Responsive Tools (github.com/ajlkn/responsive-tools)
