@@ -19,12 +19,12 @@ To get started with this project, you'll need to follow these steps:
 5. Visit http://localhost:5000 in your web browser to view the website.
 
 ## Credits
-Website Design:
+Base Website Design & Elements:
 * Massively by HTML5 UP (html5up.net | @ajlkn)
 Icons:
 * Font Awesome (fontawesome.io)
 
-Backend:
+Backend Features:
 * BaronViper
 
 Other:
