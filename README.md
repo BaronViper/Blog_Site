@@ -19,6 +19,15 @@ To get started with this project, you'll need to follow these steps:
 5. Visit http://localhost:5000 in your web browser to view the website.
 
 ## Credits
-"HTML5 UP" for the base front-end work
-BaronViper for the backend development
+Website Design:
+* Massively by HTML5 UP (html5up.net | @ajlkn)
+Icons:
+* Font Awesome (fontawesome.io)
 
+Backend:
+* BaronViper
+
+Other:
+* jQuery (jquery.com)
+* Scrollex (github.com/ajlkn/jquery.scrollex)
+* Responsive Tools (github.com/ajlkn/responsive-tools)
