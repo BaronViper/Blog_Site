@@ -1,4 +1,4 @@
-# Masisvely Blog Website [Beta Version 1.0]
+# Massively Blog Website [Beta Version 1.0]
 This is a blog website that allows for CRUD (Create, Read, Update, Delete) operations using SQL Alchemy. The base front-end work was done by "HTML5 UP" and the backend was developed by BaronViper.
 
 ## Features
