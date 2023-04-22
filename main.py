@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from flask_paginate import Pagination, get_page_parameter
 from sqlalchemy.orm import relationship
-from forms import LoginForm, BlogForm, MissionaryForm, SearchForm
+from forms import LoginForm, BlogForm, SubjectForm, SearchForm
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
 from datetime import datetime
 import os
@@ -40,8 +40,8 @@ class BlogPost(db.Model):
     title = db.Column(db.String(250), unique=True, nullable=False)
     subtitle = db.Column(db.String(250), nullable=False)
 
-    subject_id = db.Column(db.Integer, db.ForeignKey("missionaries.id"))
-    subject = relationship("Missionaries", back_populates="blogs")
+    subject_id = db.Column(db.Integer, db.ForeignKey("subject.id"))
+    subject = relationship("Subject", back_populates="blogs")
 
     quote = db.Column(db.String(250), nullable=False)
     quote_author = db.Column(db.String(250), nullable=False)
@@ -51,8 +51,8 @@ class BlogPost(db.Model):
     img_url = db.Column(db.String(250), nullable=False)
 
 
-class Missionaries(db.Model):
-    __tablename__ = "missionaries"
+class Subject(db.Model):
+    __tablename__ = "subject"
     id = db.Column(db.Integer, primary_key=True)
 
     name = db.Column(db.String(250), unique=True, nullable=False)
@@ -163,9 +163,9 @@ def logout():
 @login_required
 def create():
     form = BlogForm()
-    all_missionaries = db.session.query(Missionaries).all()
-    form.subject.choices += [(missionary.name, missionary.name) for missionary in all_missionaries if
-                             (missionary.name, missionary.name) not in form.subject.choices]
+    all_subjects = db.session.query(Subject).all()
+    form.subject.choices += [(subject.name, subject.name) for subject in all_subjects if
+                             (subject.name, subject.name) not in form.subject.choices]
 
     if form.validate_on_submit():
         if form.subject.data == "":
@@ -175,10 +175,10 @@ def create():
         if BlogPost.query.filter_by(title=form.title.data.title()).first():
             flash(message="Blog post with this title already exists. Please rename your blog.")
             return redirect(url_for('create'))
-        selected_missionary = Missionaries.query.filter_by(name=form.subject.data).first()
+        selected_subject = Subject.query.filter_by(name=form.subject.data).first()
         new_post = BlogPost(
             title=form.title.data.title(),
-            subject=selected_missionary,
+            subject=selected_subject,
             quote=form.quote.data,
             quote_author=form.quote_author.data.title(),
             subtitle=form.subtitle.data,
@@ -190,13 +190,13 @@ def create():
         db.session.add(new_post)
         db.session.commit()
         return redirect(url_for("home"))
-    return render_template('create.html', form=form, mission_list=all_missionaries)
+    return render_template('create.html', form=form, subject_list=all_subjects)
 
 
 @app.route('/edit/<int:post_id>', methods=['POST', "GET"])
 @login_required
 def edit_post(post_id):
-    all_missionaries = db.session.query(Missionaries).all()
+    all_subjects = db.session.query(Subject).all()
     post = db.session.get(BlogPost, post_id)
     edit_form = BlogForm(
         title=post.title,
@@ -208,14 +208,14 @@ def edit_post(post_id):
         message=post.body
     )
 
-    edit_form.subject.choices += [(missionary.name, missionary.name) for missionary in all_missionaries if
-                                  (missionary.name, missionary.name) not in edit_form.subject.choices]
+    edit_form.subject.choices += [(subject.name, subject.name) for subject in all_subjects if
+                                  (subject.name, subject.name) not in edit_form.subject.choices]
     edit_form.subject.default = post.subject.name
 
     if edit_form.validate_on_submit():
-        selected_missionary = Missionaries.query.filter_by(name=edit_form.subject.data).first()
+        selected_subject = Subject.query.filter_by(name=edit_form.subject.data).first()
         post.title = edit_form.title.data
-        post.subject = selected_missionary
+        post.subject = selected_subject
         post.quote = edit_form.quote.data
         post.quote_author = edit_form.quote_author.data
         post.subtitle = edit_form.subtitle.data
@@ -230,13 +230,13 @@ def edit_post(post_id):
 @app.route('/add-subject', methods=["POST", "GET"])
 @login_required
 def add_subject():
-    form = MissionaryForm()
+    form = SubjectForm()
     if form.validate_on_submit():
-        if Missionaries.query.filter_by(name=form.name.data.title()).first():
+        if Subject.query.filter_by(name=form.name.data.title()).first():
             flash(message="Person already exists.")
-            return redirect(url_for('add_missionary'))
+            return redirect(url_for('add_subject'))
         else:
-            new_post = Missionaries(
+            new_post = Subject(
                 name=form.name.data.title(),
                 location=form.location.data,
                 quote=form.quote.data,

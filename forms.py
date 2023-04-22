@@ -36,7 +36,7 @@ class BlogForm(FlaskForm):
     submit = SubmitField('Post')
 
 
-class MissionaryForm(FlaskForm):
+class SubjectForm(FlaskForm):
     name = StringField('name', validators=[DataRequired(message='Name required'), Length(min=3, max=40)])
     location = StringField('location', validators=[DataRequired(message='Location required')])
     quote = StringField('quote', validators=[DataRequired(message='Quote required'), Length(min=3, max=500)])
