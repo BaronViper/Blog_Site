@@ -6,6 +6,12 @@
             <li><a href="{{ url_for('home') }}">The LightHouse</a></li>
         {% endif %}
 
+        {% if current == 'subjects' %}
+            <li class="active"><a href="{{ url_for('subjects') }}">The LightBearers</a></li>
+        {% else %}
+            <li><a href="{{ url_for('subjects') }}">The LightBearers</a></li>
+        {% endif %}
+
 
         {% if current_user.is_authenticated %}
             {% if current == 'create' %}

@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>The LightHouse</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/Logo.ico') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+		<noscript><link rel="stylesheet" href="{{ url_for('static', filename='css/noscript.css') }}"/></noscript>
+
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Intro -->
+				<!-- Header -->
+					<header id="header">
+						<a href="{{ url_for('home') }}" class="logo">The Lighthouse</a>
+					</header>
+
+				<!-- Nav -->
+				{% with current = 'home' %}
+					{% include "navbar.html" %}
+				{% endwith %}
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Featured Post -->
+
+						{% if featured_post %}
+							<article class="post featured">
+								<header class="major">
+									<span class="date">{{ featured_post.birth }} - {{ featured_post.death }}</span>
+									<h2><a href="{{ url_for('blog', post_id=featured_post.id) }}">{{ featured_post.name }}</a></h2>
+									<p>"{{ featured_post.subtitle }}"</p>
+								</header>
+								<a href="{{ url_for('blog', post_id=featured_post.id) }}" class="image main"><img src="{{ featured_post.img_url }}" alt="" /></a>
+								<ul class="actions special">
+									<li><a href="{{ url_for('blog', post_id=featured_post.id) }}" class="button large">Full Story</a></li>
+								</ul>
+							</article>
+						{% endif %}
+
+						<!-- Posts -->
+						{% if all_posts %}
+							<section class="posts">
+								{% for post in all_posts %}
+								<article>
+									<header>
+										<span class="date">{{ featured_post.birth }} - {{ featured_post.death }}</span>
+										<h2><a href="{{ url_for('blog', post_id=post.id) }}">{{ post.name }}</a></h2>
+									</header>
+									<a href="{{ url_for('blog', post_id=post.id) }}" class="image fit"><img src="{{ post.img_url }}" alt="" /></a>
+									<p>"{{ post.subtitle }}"</p>
+									<ul class="actions special">
+										<li><a href="{{ url_for('blog', post_id=post.id) }}" class="button">Full Story</a></li>
+									</ul>
+								</article>
+								{% endfor %}
+							</section>
+						{% endif %}
+
+						<!-- Footer -->
+						{% if all_posts %}
+							<footer>
+								<div class="pagination">
+									{% if all_posts.has_prev %}
+										<a href="{{ url_for('home', page=all_posts.prev_num) }}" class="previous">Prev</a>
+									{% else %}
+										<a href="#" class="previous disabled">Prev</a>
+									{% endif %}
+
+									{% for page in all_posts.iter_pages() %}
+										{% if page %}
+											{% if page == all_posts.page %}
+												<a href="#" class="page active">{{ page }}</a>
+											{% else %}
+												<a href="{{ url_for('home', page=page) }}" class="page">{{ page }}</a>
+											{% endif %}
+										{% else %}
+											<span class="extra">&hellip;</span>
+										{% endif %}
+									{% endfor %}
+
+									{% if all_posts.has_next %}
+										<a href="{{ url_for('home', page=all_posts.next_num) }}" class="next">Next</a>
+									{% else %}
+										<a href="#" class="next disabled">Next</a>
+									{% endif %}
+								</div>
+							</footer>
+						{% endif %}
+
+					</div>
+
+				<!-- Footer -->
+
+
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; BaronViper</li><li>Powered By: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='js/jquery.scrollex.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='js/jquery.scrolly.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='js/browser.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='js/breakpoints.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='js/util.js') }}"></script>
+			<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+	</body>
+</html>

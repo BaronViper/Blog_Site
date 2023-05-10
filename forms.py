@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, EmailField, URLField, SelectField
+from wtforms import StringField, PasswordField, SubmitField, EmailField, URLField, SelectField, BooleanField
 from wtforms.validators import DataRequired, Length, URL
 
 
@@ -48,6 +48,7 @@ class SubjectForm(FlaskForm):
                                           URL(require_tld=False, message='Invalid Image URL')])
     message = StringField('message', validators=[DataRequired(message='Biography required'),
                                                  Length(min=10, message='Biography too short')])
+    visibility = BooleanField('visibility')
     submit = SubmitField('Add')
 
 # class ContactForm(FlaskForm):

@@ -8,7 +8,6 @@ from flask_login import UserMixin, LoginManager, login_user, logout_user, login_
 from datetime import datetime
 import os
 
-
 date = datetime
 
 app = Flask(__name__)
@@ -65,6 +64,7 @@ class Subject(db.Model):
     death = db.Column(db.Integer, nullable=False)
     biography = db.Column(db.Text, nullable=False)
     img_url = db.Column(db.String(250), nullable=False)
+    visibility = db.Column(db.String(250), nullable=False)
 
     blogs = relationship("BlogPost", back_populates="subject")
 
@@ -82,6 +82,10 @@ with app.app_context():
 def home():
     page = request.args.get(get_page_parameter(), type=int, default=1)
     per_page = 6
+
+    if not User.query.all():
+        for n in range(1, 5):
+            new_user = User()
 
     if not BlogPost.query.all():
         all_posts = False
@@ -130,6 +134,35 @@ def search():
 
         return render_template('search.html', form=form, all_posts=posts)
     return redirect(url_for('home'))
+
+
+@app.route('/subjects')
+def subjects():
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    per_page = 6
+
+    if not User.query.all():
+        for n in range(1, 5):
+            new_user = User()
+
+    if not Subject.query.all():
+        all_posts = False
+        featured_post = 0
+
+    elif page == 1 and Subject.query.filter_by(visibility=1).all():
+        visible_posts = Subject.query.filter_by(visibility=1).order_by(Subject.id.desc()).all()
+        featured_post = visible_posts[0]
+        all_posts = Subject.query.filter(Subject.id != featured_post.id and Subject.visibility == 0).order_by(
+            Subject.id.desc()).paginate(
+            page=page, per_page=per_page)
+    else:
+        featured_post = 0
+        all_posts = Subject.query.filter(
+            Subject.id != Subject.query.order_by(Subject.id.desc()).first().id).order_by(
+            BlogPost.id.desc()).paginate(
+            page=page, per_page=per_page)
+
+    return render_template('subjects.html', featured_post=featured_post, all_posts=all_posts)
 
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -245,6 +278,7 @@ def add_subject():
                 death=form.death.data,
                 biography=form.message.data,
                 img_url=form.image.data,
+                visibility=form.visibility.data
             )
             db.session.add(new_post)
             db.session.commit()
@@ -268,9 +302,9 @@ def page_not_found(error):
     return render_template('404.html', error=format_error, error_message=error_message)
 
 
-# @app.route('/elements')
-# def elements():
-#     return render_template('elements.html')
+@app.route('/elements')
+def elements():
+    return render_template('elements.html')
 
 
 if __name__ == '__main__':
