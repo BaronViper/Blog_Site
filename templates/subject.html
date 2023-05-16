@@ -32,18 +32,17 @@
 						<!-- Post -->
 							<section class="post">
 								<header class="major">
-									<span class="date">{{ post.date }}</span>
-									<h1>{{ post.title }}</h1>
-									<p>"{{ post.quote}}"<br>-C.S. Lewis</p>
-									<p>By {{ post.author.name}}</p>
+									<h1>{{ post.name }}</h1>
+									<span class="date">{{ post.birth }} - {{ post.death }}</span>
+									<p>"{{ post.quote}}"</p>
 								</header>
 								<div class="image main"><img src="{{ post.img_url }}" alt="Unsupported Image" /></div>
-								<p style="white-space: pre-wrap;">{{ post.body }}</p>
-								{% if current_user.name == post.author.name %}
+								<p style="white-space: pre-wrap;">{{ post.biography }}</p>
+								{% if current_user.is_authenticated %}
 									<p><a href="{{ url_for('edit_post', post_id=post.id) }}">Edit Post</a></p>
 								{% endif %}
-								{% if current_user.name == post.author.name %}
-									<p><a href="{{ url_for('delete_post', page_type='BlogPost', post_id=post.id) }}">Delete Post</a></p>
+								{% if current_user.is_authenticated %}
+									<p><a href="{{ url_for('delete_post', page_type='Subject', post_id=post.id) }}">Delete Post</a></p>
 								{% endif %}
 							</section>
 

@@ -26,7 +26,7 @@
 					</header>
 
 				<!-- Nav -->
-				{% with current = 'home' %}
+				{% with current = 'subjects' %}
 					{% include "navbar.html" %}
 				{% endwith %}
 
@@ -38,13 +38,13 @@
 						{% if featured_post %}
 							<article class="post featured">
 								<header class="major">
+									<h2><a href="{{ url_for('subject', subject_id=featured_post.id) }}">{{ featured_post.name }}</a></h2>
 									<span class="date">{{ featured_post.birth }} - {{ featured_post.death }}</span>
-									<h2><a href="{{ url_for('blog', post_id=featured_post.id) }}">{{ featured_post.name }}</a></h2>
 									<p>"{{ featured_post.subtitle }}"</p>
 								</header>
-								<a href="{{ url_for('blog', post_id=featured_post.id) }}" class="image main"><img src="{{ featured_post.img_url }}" alt="" /></a>
+								<a href="{{ url_for('subject', subject_id=featured_post.id) }}" class="image main"><img src="{{ featured_post.img_url }}" alt="" /></a>
 								<ul class="actions special">
-									<li><a href="{{ url_for('blog', post_id=featured_post.id) }}" class="button large">Full Story</a></li>
+									<li><a href="{{ url_for('subject', subject_id=featured_post.id) }}" class="button large">Full Story</a></li>
 								</ul>
 							</article>
 						{% endif %}
@@ -55,13 +55,13 @@
 								{% for post in all_posts %}
 								<article>
 									<header>
-										<span class="date">{{ featured_post.birth }} - {{ featured_post.death }}</span>
-										<h2><a href="{{ url_for('blog', post_id=post.id) }}">{{ post.name }}</a></h2>
+										<h2><a href="{{ url_for('subject', subject_id=post.id) }}">{{ post.name }}</a></h2>
+										<span class="date">{{ post.birth }} - {{ post.death }}</span>
 									</header>
-									<a href="{{ url_for('blog', post_id=post.id) }}" class="image fit"><img src="{{ post.img_url }}" alt="" /></a>
+									<a href="{{ url_for('subject', subject_id=post.id) }}" class="image fit"><img src="{{ post.img_url }}" alt="" /></a>
 									<p>"{{ post.subtitle }}"</p>
 									<ul class="actions special">
-										<li><a href="{{ url_for('blog', post_id=post.id) }}" class="button">Full Story</a></li>
+										<li><a href="{{ url_for('subject', subject_id=post.id) }}" class="button">Full Story</a></li>
 									</ul>
 								</article>
 								{% endfor %}

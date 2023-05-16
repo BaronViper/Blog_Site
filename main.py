@@ -149,20 +149,26 @@ def subjects():
         all_posts = False
         featured_post = 0
 
-    elif page == 1 and Subject.query.filter_by(visibility=1).all():
-        visible_posts = Subject.query.filter_by(visibility=1).order_by(Subject.id.desc()).all()
+    elif page == 1 and Subject.query.filter_by(visibility=0).all():
+        visible_posts = Subject.query.filter_by(visibility=0).order_by(Subject.id.desc()).all()
         featured_post = visible_posts[0]
-        all_posts = Subject.query.filter(Subject.id != featured_post.id and Subject.visibility == 0).order_by(
+        all_posts = Subject.query.filter(Subject.id != featured_post.id, Subject.visibility == 0).order_by(
             Subject.id.desc()).paginate(
             page=page, per_page=per_page)
     else:
         featured_post = 0
         all_posts = Subject.query.filter(
             Subject.id != Subject.query.order_by(Subject.id.desc()).first().id).order_by(
-            BlogPost.id.desc()).paginate(
+            Subject.id.desc()).paginate(
             page=page, per_page=per_page)
 
     return render_template('subjects.html', featured_post=featured_post, all_posts=all_posts)
+
+
+@app.route('/subject/<int:subject_id>', methods=['GET'])
+def subject(subject_id):
+    target_post = Subject.query.filter_by(id=subject_id).first()
+    return render_template('subject.html', post=target_post)
 
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -286,10 +292,13 @@ def add_subject():
     return render_template('add_subject.html', form=form)
 
 
-@app.route('/delete-post/<int:post_id>', methods=["POST", "GET"])
+@app.route('/delete/<page_type>/<int:post_id>', methods=["POST", "GET"])
 @login_required
-def delete_post(post_id):
-    db.session.delete(BlogPost.query.filter_by(id=post_id).first())
+def delete_post(page_type, post_id):
+    if page_type == 'BlogPost':
+        db.session.delete(BlogPost.query.filter_by(id=post_id).first())
+    elif page_type == 'Subject':
+        db.session.delete(Subject.query.filter_by(id=post_id).first())
     db.session.commit()
     return redirect(url_for('home'))
 
