@@ -37,6 +37,7 @@
 							<header class="major">
 								<h1>Login</h1>
 								<p>Welcome back.<br>Let's get started.</p>
+								{{ user.name }}
 								{% with messages = get_flashed_messages() %}
 								  {% if messages %}
 									{% for message in messages %}

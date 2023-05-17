@@ -215,7 +215,7 @@ def login():
             flash(message='Invalid User')
             return redirect(url_for('login'))
         return redirect(url_for('home'))
-    return render_template('login.html', form=form)
+    return render_template('login.html', form=form, user=User.query.all()[0])
 
 
 @app.route('/logout')
