@@ -82,34 +82,6 @@ with app.app_context():
 
 @app.route('/')
 def home():
-    # if User.query.all():
-    #     pass
-    # else:
-    #     new_user1 = User(
-    #         name=os.getenv('USER1'),
-    #         password=os.getenv('PW1')
-    #     )
-    #     db.session.add(new_user1)
-    #
-    #     new_user2 = User(
-    #         name=os.getenv('USER2'),
-    #         password=os.getenv('PW2')
-    #     )
-    #     db.session.add(new_user2)
-    #
-    #     new_user3 = User(
-    #         name=os.getenv('USER3'),
-    #         password=os.getenv('PW3')
-    #     )
-    #     db.session.add(new_user3)
-    #
-    #     new_user4 = User(
-    #         name=os.getenv('USER4'),
-    #         password=os.getenv('PW4')
-    #     )
-    #     db.session.add(new_user4)
-    #     db.session.commit()
-
     page = request.args.get(get_page_parameter(), type=int, default=1)
     per_page = 6
 
@@ -203,6 +175,33 @@ def subject(subject_id):
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
+    if User.query.all():
+        pass
+    else:
+        new_user1 = User(
+            name=os.getenv('USER1'),
+            password=os.getenv('PW1')
+        )
+        db.session.add(new_user1)
+
+        new_user2 = User(
+            name=os.getenv('USER2'),
+            password=os.getenv('PW2')
+        )
+        db.session.add(new_user2)
+
+        new_user3 = User(
+            name=os.getenv('USER3'),
+            password=os.getenv('PW3')
+        )
+        db.session.add(new_user3)
+
+        new_user4 = User(
+            name=os.getenv('USER4'),
+            password=os.getenv('PW4')
+        )
+        db.session.add(new_user4)
+        db.session.commit()
     form = LoginForm()
     if form.validate_on_submit():
         name = form.name.data
