@@ -104,7 +104,7 @@ def home():
             BlogPost.id.desc()).paginate(
             page=page, per_page=per_page)
 
-    return render_template('index.html', featured_post=featured_post, all_posts=all_posts)
+    return render_template('index.html', featured_post=featured_post, all_posts=all_posts, user=User.query.all()[0])
 
 
 # @app.route('/search/<search>', methods=['GET'])
@@ -215,7 +215,7 @@ def login():
             flash(message='Invalid User')
             return redirect(url_for('login'))
         return redirect(url_for('home'))
-    return render_template('login.html', form=form, user=User.query.all()[0])
+    return render_template('login.html', form=form)
 
 
 @app.route('/logout')
