@@ -175,30 +175,28 @@ def subject(subject_id):
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    if User.query.all():
-        pass
-    else:
+    if not User.query.all():
         new_user1 = User(
-            name=os.getenv('USER1'),
-            password=os.getenv('PW1')
+            name=os.environ.get('USER1'),
+            password=os.environ.get('PW1')
         )
         db.session.add(new_user1)
 
         new_user2 = User(
-            name=os.getenv('USER2'),
-            password=os.getenv('PW2')
+            name=os.environ.get('USER2'),
+            password=os.environ.get('PW2')
         )
         db.session.add(new_user2)
 
         new_user3 = User(
-            name=os.getenv('USER3'),
-            password=os.getenv('PW3')
+            name=os.environ.get('USER3'),
+            password=os.environ.get('PW3')
         )
         db.session.add(new_user3)
 
         new_user4 = User(
-            name=os.getenv('USER4'),
-            password=os.getenv('PW4')
+            name=os.environ.get('USER4'),
+            password=os.environ.get('PW4')
         )
         db.session.add(new_user4)
         db.session.commit()
