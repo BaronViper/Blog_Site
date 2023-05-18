@@ -314,7 +314,7 @@ def elements():
     return render_template('elements.html')
 
 
-@app.route('/register')
+@app.route('/register', methods=['POST', 'GET'])
 def register():
     form = LoginForm()
     if form.validate_on_submit():
