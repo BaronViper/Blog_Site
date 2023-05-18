@@ -316,34 +316,34 @@ def elements():
 
 @app.route('/register')
 def register():
-    if not User.query.all():
+    form = LoginForm()
+    if form.validate_on_submit():
         new_user1 = User(
-            name=os.environ.get('USER1'),
-            password=os.environ.get('PW1')
+            name=form.name.data,
+            password=form.password.data
         )
         db.session.add(new_user1)
-
-        # new_user2 = User(
-        #     name=os.environ.get('USER2'),
-        #     password=os.environ.get('PW2')
-        # )
-        # db.session.add(new_user2)
-        #
-        # new_user3 = User(
-        #     name=os.environ.get('USER3'),
-        #     password=os.environ.get('PW3')
-        # )
-        # db.session.add(new_user3)
-        #
-        # new_user4 = User(
-        #     name=os.environ.get('USER4'),
-        #     password=os.environ.get('PW4')
-        # )
-        # db.session.add(new_user4)
         db.session.commit()
         return redirect(url_for('home'))
-    return redirect(url_for('home'))
+    return render_template('register.html', form=form)
 
+# new_user2 = User(
+    #     name=os.environ.get('USER2'),
+    #     password=os.environ.get('PW2')
+    # )
+    # db.session.add(new_user2)
+    #
+    # new_user3 = User(
+    #     name=os.environ.get('USER3'),
+    #     password=os.environ.get('PW3')
+    # )
+    # db.session.add(new_user3)
+    #
+    # new_user4 = User(
+    #     name=os.environ.get('USER4'),
+    #     password=os.environ.get('PW4')
+    # )
+    # db.session.add(new_user4)
 
 if __name__ == '__main__':
     app.run(debug=True)
