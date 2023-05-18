@@ -23,7 +23,7 @@ login_manager.init_app(app)
 dotenv.load_dotenv()
 
 
-class User(UserMixin, db.Model):
+class User(db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
@@ -85,10 +85,6 @@ def home():
     page = request.args.get(get_page_parameter(), type=int, default=1)
     per_page = 6
 
-    if not User.query.all():
-        for n in range(1, 5):
-            new_user = User()
-
     if not BlogPost.query.all():
         all_posts = False
         featured_post = 0
@@ -104,7 +100,7 @@ def home():
             BlogPost.id.desc()).paginate(
             page=page, per_page=per_page)
 
-    return render_template('index.html', featured_post=featured_post, all_posts=all_posts, user=User.query.all()[0])
+    return render_template('index.html', featured_post=featured_post, all_posts=all_posts)
 
 
 # @app.route('/search/<search>', methods=['GET'])
@@ -175,31 +171,6 @@ def subject(subject_id):
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    # if not User.query.all():
-    #     new_user1 = User(
-    #         name=os.environ.get('USER1'),
-    #         password=os.environ.get('PW1')
-    #     )
-    #     db.session.add(new_user1)
-    #
-    #     new_user2 = User(
-    #         name=os.environ.get('USER2'),
-    #         password=os.environ.get('PW2')
-    #     )
-    #     db.session.add(new_user2)
-    #
-    #     new_user3 = User(
-    #         name=os.environ.get('USER3'),
-    #         password=os.environ.get('PW3')
-    #     )
-    #     db.session.add(new_user3)
-    #
-    #     new_user4 = User(
-    #         name=os.environ.get('USER4'),
-    #         password=os.environ.get('PW4')
-    #     )
-    #     db.session.add(new_user4)
-    #     db.session.commit()
     form = LoginForm()
     if form.validate_on_submit():
         name = form.name.data
@@ -341,6 +312,36 @@ def page_not_found(error):
 @app.route('/elements')
 def elements():
     return render_template('elements.html')
+
+
+@app.route('/register')
+def register():
+    if not User.query.all():
+        new_user1 = User(
+            name=os.environ.get('USER1'),
+            password=os.environ.get('PW1')
+        )
+        db.session.add(new_user1)
+
+        new_user2 = User(
+            name=os.environ.get('USER2'),
+            password=os.environ.get('PW2')
+        )
+        db.session.add(new_user2)
+
+        new_user3 = User(
+            name=os.environ.get('USER3'),
+            password=os.environ.get('PW3')
+        )
+        db.session.add(new_user3)
+
+        new_user4 = User(
+            name=os.environ.get('USER4'),
+            password=os.environ.get('PW4')
+        )
+        db.session.add(new_user4)
+        db.session.commit()
+    return redirect(url_for('home'))
 
 
 if __name__ == '__main__':
