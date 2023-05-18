@@ -11,9 +11,6 @@ import os
 
 date = datetime
 
-main_project_directory = os.path.dirname(os.path.abspath(__file__))
-os.chmod(main_project_directory, 0o777)
-
 app = Flask(__name__)
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
