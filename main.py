@@ -9,18 +9,17 @@ from datetime import datetime
 import dotenv
 import os
 
+dotenv.load_dotenv()
 date = datetime
 
 app = Flask(__name__)
-SECRET_KEY = os.urandom(32)
-app.config['SECRET_KEY'] = SECRET_KEY
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///blog.db"
+app.config['SECRET_KEY'] = os.urandom(32)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('POSTGRES_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-dotenv.load_dotenv()
 
 
 class User(UserMixin, db.Model):
