@@ -11,6 +11,9 @@ import os
 
 date = datetime
 
+main_project_directory = os.path.dirname(os.path.abspath(__file__))
+os.chmod(main_project_directory, 0o777)
+
 app = Flask(__name__)
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
@@ -323,23 +326,23 @@ def register():
         )
         db.session.add(new_user1)
 
-        new_user2 = User(
-            name=os.environ.get('USER2'),
-            password=os.environ.get('PW2')
-        )
-        db.session.add(new_user2)
-
-        new_user3 = User(
-            name=os.environ.get('USER3'),
-            password=os.environ.get('PW3')
-        )
-        db.session.add(new_user3)
-
-        new_user4 = User(
-            name=os.environ.get('USER4'),
-            password=os.environ.get('PW4')
-        )
-        db.session.add(new_user4)
+        # new_user2 = User(
+        #     name=os.environ.get('USER2'),
+        #     password=os.environ.get('PW2')
+        # )
+        # db.session.add(new_user2)
+        #
+        # new_user3 = User(
+        #     name=os.environ.get('USER3'),
+        #     password=os.environ.get('PW3')
+        # )
+        # db.session.add(new_user3)
+        #
+        # new_user4 = User(
+        #     name=os.environ.get('USER4'),
+        #     password=os.environ.get('PW4')
+        # )
+        # db.session.add(new_user4)
         db.session.commit()
     return redirect(url_for('home'))
 
