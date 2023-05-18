@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>The Mission</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/Logo.ico') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+		<noscript><link rel="stylesheet" href="{{ url_for('static', filename='css/noscript.css') }}" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="{{ url_for('home') }}" class="logo">The LightHouse</a>
+					</header>
+
+				<!-- Nav -->
+					{% with current = 'login' %}
+						{% include "navbar.html" %}
+					{% endwith %}
+
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+						<section class="post">
+							<header class="major">
+								<h1>Register</h1>
+								<p>Welcome!<br>Get registered.</p>
+								{% with messages = get_flashed_messages() %}
+								  {% if messages %}
+									{% for message in messages %}
+									  <p>{{ message }}</p>
+									{% endfor %}
+								  {% endif %}
+								{% endwith %}
+							</header>
+							<form method="post" action="{{ url_for('register')}}">
+								{{ form.hidden_tag() }}
+								{{ form.csrf_token }}
+								<div class="row gtr-uniform">
+									<div class="col-6 col-12-xsmall">
+										<input type="text" name="name" id="demo-name" value="" placeholder="Name" />
+									</div>
+									<div class="col-6 col-12-xsmall">
+										<input type="password" name="password" id="demo-email" value="" placeholder="Password" />
+									</div>
+									<div class="col-12">
+										<ul class="actions">
+											<li><input name="submit" type="submit" value="Register" class="primary" /></li>
+										</ul>
+									</div>
+								</div>
+
+							</form>
+						</section>
+
+
+					</div>
+
+				<!-- Footer -->
+
+
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; BaronViper</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='js/jquery.scrollex.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='js/jquery.scrolly.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='js/browser.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='js/breakpoints.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='js/util.js') }}"></script>
+			<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+	</body>
+</html>
