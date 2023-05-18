@@ -341,6 +341,7 @@ def register():
         # )
         # db.session.add(new_user4)
         db.session.commit()
+        return redirect(url_for('home'))
     return redirect(url_for('home'))
 
 
