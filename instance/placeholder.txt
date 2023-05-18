@@ -1,0 +1,1 @@
+Blog database 'blogs.db' goes here.
