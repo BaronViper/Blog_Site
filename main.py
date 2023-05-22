@@ -138,18 +138,14 @@ def subjects():
     page = request.args.get(get_page_parameter(), type=int, default=1)
     per_page = 6
 
-    if not User.query.all():
-        for n in range(1, 5):
-            new_user = User()
-
-    if not Subject.query.all():
+    if not Subject.query.filter_by(visibility="true").all():
         all_posts = False
         featured_post = 0
 
-    elif page == 1 and Subject.query.filter_by(visibility=0).all():
-        visible_posts = Subject.query.filter_by(visibility=0).order_by(Subject.id.desc()).all()
+    elif page == 1 and Subject.query.filter_by(visibility="true").all():
+        visible_posts = Subject.query.filter_by(visibility="true").order_by(Subject.id.desc()).all()
         featured_post = visible_posts[0]
-        all_posts = Subject.query.filter(Subject.id != featured_post.id, Subject.visibility == 0).order_by(
+        all_posts = Subject.query.filter(Subject.id != featured_post.id, Subject.visibility == "true").order_by(
             Subject.id.desc()).paginate(
             page=page, per_page=per_page)
     else:
