@@ -14,7 +14,7 @@ date = datetime
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(32)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('POSTGRES_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('POSTGRES_URL').replace("postgres:", "postgresql:").replace("vercel-storage.com", "vercel-storage.com:5432")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
