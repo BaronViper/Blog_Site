@@ -14,7 +14,7 @@ date = datetime
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(32)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('POSTGRES_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///blog.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -138,14 +138,14 @@ def subjects():
     page = request.args.get(get_page_parameter(), type=int, default=1)
     per_page = 6
 
-    if not Subject.query.filter_by(visibility="true").all():
+    if not Subject.query.filter_by(visibility="1").all():
         all_posts = False
         featured_post = 0
 
-    elif page == 1 and Subject.query.filter_by(visibility="true").all():
-        visible_posts = Subject.query.filter_by(visibility="true").order_by(Subject.id.desc()).all()
+    elif page == 1 and Subject.query.filter_by(visibility="1").all():
+        visible_posts = Subject.query.filter_by(visibility="1").order_by(Subject.id.desc()).all()
         featured_post = visible_posts[0]
-        all_posts = Subject.query.filter(Subject.id != featured_post.id, Subject.visibility == "true").order_by(
+        all_posts = Subject.query.filter(Subject.id != featured_post.id, Subject.visibility == "1").order_by(
             Subject.id.desc()).paginate(
             page=page, per_page=per_page)
     else:
@@ -309,43 +309,44 @@ def elements():
     return render_template('elements.html')
 
 
-# @app.route('/register', methods=['POST', 'GET'])
-# def register():
-#     if not User.query.all():
-#         new_user1 = User(
-#             name=os.environ.get('USER1'),
-#             password=os.environ.get('PW1')
-#         )
-#         db.session.add(new_user1)
-#
-#         new_user2 = User(
-#             name=os.environ.get('USER2'),
-#             password=os.environ.get('PW2')
-#         )
-#         db.session.add(new_user2)
-#
-#         new_user3 = User(
-#             name=os.environ.get('USER3'),
-#             password=os.environ.get('PW3')
-#         )
-#         db.session.add(new_user3)
-#
-#         new_user4 = User(
-#             name=os.environ.get('USER4'),
-#             password=os.environ.get('PW4')
-#         )
-#         db.session.add(new_user4)
-#         db.session.commit()
-#     form = LoginForm()
-#     if form.validate_on_submit():
-#         new_user1 = User(
-#             name=form.name.data,
-#             password=form.password.data
-#         )
-#         db.session.add(new_user1)
-#         db.session.commit()
-#         return redirect(url_for('home'))
-#     return render_template('register.html', form=form)
+@app.route('/register', methods=['POST', 'GET'])
+def register():
+    # if not User.query.all():
+    #     new_user1 = User(
+    #         name=os.environ.get('USER1'),
+    #         password=os.environ.get('PW1')
+    #     )
+    #     db.session.add(new_user1)
+    #
+    #     new_user2 = User(
+    #         name=os.environ.get('USER2'),
+    #         password=os.environ.get('PW2')
+    #     )
+    #     db.session.add(new_user2)
+    #
+    #     new_user3 = User(
+    #         name=os.environ.get('USER3'),
+    #         password=os.environ.get('PW3')
+    #     )
+    #     db.session.add(new_user3)
+    #
+    #     new_user4 = User(
+    #         name=os.environ.get('USER4'),
+    #         password=os.environ.get('PW4')
+    #     )
+    #     db.session.add(new_user4)
+    #     db.session.commit()
+    form = LoginForm()
+    if form.validate_on_submit():
+        new_user1 = User(
+            name=form.name.data,
+            password=form.password.data
+        )
+        db.session.add(new_user1)
+        db.session.commit()
+        return redirect(url_for('home'))
+    return render_template('register.html', form=form)
+
 
 if __name__ == '__main__':
     app.run()
