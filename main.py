@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from flask_paginate import Pagination, get_page_parameter
+from flask_migrate import Migrate
 from sqlalchemy.orm import relationship
 from forms import LoginForm, BlogForm, SubjectForm, SearchForm
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
@@ -19,6 +20,7 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('POSTGRES_URL').replace("postgres:", "postgresql:").replace("vercel-storage.com", "vercel-storage.com:5432")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
