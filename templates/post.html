@@ -34,7 +34,7 @@
 								<header class="major">
 									<span class="date">{{ post.date }}</span>
 									<h1>{{ post.title }}</h1>
-									<p>"{{ post.quote}}"<br>-C.S. Lewis</p>
+									<p>"{{ post.quote}}"<br>-{{ post.quote_author.name }}</p>
 									<p>By {{ post.author.name}}</p>
 								</header>
 								<div class="image main"><img src="{{ post.img_url }}" alt="Unsupported Image" /></div>
