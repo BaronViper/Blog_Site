@@ -63,8 +63,8 @@ class Subject(db.Model):
 
     quote = db.Column(db.String(250), nullable=False)
 
-    birth = db.Column(db.String, nullable=False)
-    death = db.Column(db.String, nullable=False)
+    birth = db.Column(db.String(250), nullable=False)
+    death = db.Column(db.String(250), nullable=False)
     biography = db.Column(db.Text, nullable=False)
     img_url = db.Column(db.String(250), nullable=False)
     visibility = db.Column(db.String(250), nullable=False)
