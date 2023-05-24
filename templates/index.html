@@ -114,11 +114,16 @@
 
 				<!-- Footer -->
 
-
+				{% if not current_user.is_authenticated %}
 				<!-- Copyright -->
 					<div id="copyright">
-						<ul><li>&copy; BaronViper</li><li>Powered By: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+						<ul><li>&copy; BaronViper</li><li>Powered By: <a href="https://html5up.net">HTML5 UP</a></li><li><a href="{{ url_for('login')}}">Log In</a></li></ul>
 					</div>
+				{% else %}
+					<div id="copyright">
+						<ul><li>&copy; BaronViper</li><li>Powered By: <a href="https://html5up.net">HTML5 UP</a></li><li><a href="{{ url_for('logout')}}">Log Out</a></li></ul>
+					</div>
+				{% endif %}
 
 			</div>
 

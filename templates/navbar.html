@@ -21,15 +21,6 @@
             {% endif %}
         {% endif %}
 
-        {% if not current_user.is_authenticated %}
-            {% if current == 'login' %}
-                <li class="active"><a href="{{ url_for('login') }}">Login</a></li>
-            {% else %}
-                <li><a href="{{ url_for('login') }}">Login</a></li>
-            {% endif %}
-        {% else %}
-            <li><a href="{{ url_for('logout') }}">Logout</a></li>
-        {% endif %}
 
     </ul>
     <form class="d-flex" method="POST" role="search" action="{{ url_for('search') }}">
